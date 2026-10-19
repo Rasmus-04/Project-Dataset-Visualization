@@ -76,7 +76,7 @@ In this project, Patrick G. has been identified as the person within the company
 - Project Assumptions
   - With regards to the data, the acquired  and pre-processed datasets are assumed to contain all information relevant to meeting the Business Objectives and Data Mining Objectives.
 - Project Constraints
-  - All resources (human, hardware, software) will be available during the wntire lifetime of the project without any specific constraints.
+  - All resources (human, hardware, software) will be available during the entire lifetime of the project without any specific constraints.
   - No technological constraints with regards to the datasets have been identified.
 
 ### Output: Risks and Contingencies
