@@ -2,20 +2,20 @@ import numpy as np
 import pandas as pd
 
 # ladda in alla dataframes
-df_charts = pd.read_csv('project/data/vg_charts.csv')
-df_developers = pd.read_csv('project/data/vg_developers.csv')
-df_geo_cities = pd.read_csv('project/data/vg_geo_cities.csv')
-df_geo_countries = pd.read_csv('project/data/vg_geo_countries.csv')
-df_publishers = pd.read_csv('project/data/vg_publishers.csv')
+df_charts = pd.read_csv('data/vg_charts.csv')
+df_developers = pd.read_csv('data/vg_developers.csv')
+df_geo_cities = pd.read_csv('data/vg_geo_cities.csv')
+df_geo_countries = pd.read_csv('data/vg_geo_countries.csv')
+df_publishers = pd.read_csv('data/vg_publishers.csv')
 
 # Ladda in alla data dictornarys
-dd_charts = pd.read_csv('project/data/data_dictionary/vg_charts.csv')
-dd_developers = pd.read_csv('project/data/data_dictionary/vg_developers.csv')
-dd_geo_cities = pd.read_csv('project/data/data_dictionary/vg_geo_cities.csv')
-dd_geo_countries = pd.read_csv('project/data/data_dictionary/vg_geo_countries.csv')
-dd_publishers = pd.read_csv('project/data/data_dictionary/vg_publishers.csv')
+dd_charts = pd.read_csv('data/data_dictionary/vg_charts.csv')
+dd_developers = pd.read_csv('data/data_dictionary/vg_developers.csv')
+dd_geo_cities = pd.read_csv('data/data_dictionary/vg_geo_cities.csv')
+dd_geo_countries = pd.read_csv('data/data_dictionary/vg_geo_countries.csv')
+dd_publishers = pd.read_csv('data/data_dictionary/vg_publishers.csv')
 
-prepaired_data_location = "project/preparedData"
+prepaired_data_location = "preparedData"
 
 REGIONAL_SALES = ["na_sales", "jp_sales", "pal_sales", "other_sales"]
 

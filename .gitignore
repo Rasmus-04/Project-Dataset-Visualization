@@ -59,3 +59,7 @@ ai-artifacts/*
 
 .conda
 .vscode/
+
+# Ignore all files inside preparedData, but keep the folder
+preparedData/*
+!preparedData/.gitkeep
