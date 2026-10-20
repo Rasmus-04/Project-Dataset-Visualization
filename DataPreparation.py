@@ -127,7 +127,7 @@ def clean_geo_countries(df):
 # Skapar dataframesen för alla frågor
 
 # Används för fråga 1: regional sales by platform
-def create_dataframe_for_question1(prepared_charts):
+def create_df_q1(prepared_charts):
     df = prepared_charts
     return (
         df.groupby("platform")[REGIONAL_SALES] # Grupperar raderna efter platform och väljer kolumnerna som ska summeras
@@ -135,18 +135,19 @@ def create_dataframe_for_question1(prepared_charts):
         .reset_index() # Gör platform till en vanlig kolumn och återställer indexet till 0, 1, 2, ...
     )
 
-# Används för fråga 2: sales by platform, including regional sales
-def create_platform_sales_by_region(prepared_charts):
+# Används för fråga 2: most popular platform for playing video games
+def create_df_q2(prepared_charts):
     df = prepared_charts
     return (
-        df.groupby("platform")[REGIONAL_SALES + ["total_sales"]] # Grupperar raderna efter platform och väljer kolumnerna som ska summeras
+        df.groupby("platform")["total_sales"] # Grupperar raderna efter platform och väljer kolumnerna som ska summeras
         .sum(min_count=1) # Summerar värdena i varje grupp och kolumn om minst ett giltigt värde finns
         .reset_index() # Gör platform till en vanlig kolumn och återställer indexet till 0, 1, 2, ...
         .sort_values("total_sales", ascending=False) # Sorterar df på total_sales i fallande ordning (högst till lägst)
     )
 
-# Används för fråga 3 och 11: sales per release year and region
-def create_yearly_regional_sales(prepared_charts):
+
+# Används för fråga 3: Video game sales vary per release year in each region
+def create_df_q3(prepared_charts):
     df = prepared_charts.dropna(subset=["release_year"])  # Tar bort rader där release_year saknas
     return (
         df.groupby("release_year")[REGIONAL_SALES + ["total_sales"]] # Grupperar raderna efter release_year och väljer kolumnerna som ska summeras
@@ -233,17 +234,17 @@ def create_title_worldwide_sales(prepared_charts):
         .sort_values("worldwide_sales", ascending=False) # Sorterar df på worldwide_sales i fallande ordning 
     )
 
-"""
-# används för fråga 12: sales grouped by platform and genre
-def create_platform_genre_sales(prepared_charts):
-    df = prepared_charts
+# Används för fråga 11: sales per release year and region
+def create_yearly_regional_sales(prepared_charts):
+    df = prepared_charts.dropna(subset=["release_year"])  # Tar bort rader där release_year saknas
     return (
-        df.groupby(["platform", "genre"])["total_sales"] # Grupperar raderna efter plattform och genre och väljer kolumnen total_sales
-        .sum(min_count=1) # Summerar total_sales för varje kombination av plattform och genre
-        .reset_index() # Gör platform och genre till vanliga kolumner och återställer indexet
-        .sort_values(["platform", "total_sales"], ascending=[True, False]) # Sorterar plattformarna alfabetiskt och försäljningen inom varje plattform från högst till lägst
+        df.groupby("release_year")[REGIONAL_SALES + ["total_sales"]] # Grupperar raderna efter release_year och väljer kolumnerna som ska summeras
+        .sum(min_count=1) # Summerar värdena i varje grupp och kolumn om minst ett giltigt värde finns
+        .reset_index() # Gör release_year till en vanlig kolumn och återställer indexet till 0, 1, 2, ...
+        .sort_values("release_year") # Sorterar efter release_year i stigande ordning, från äldst till nyast
     )
-"""
+
+# används för fråga 12: sales grouped by platform and genre
 def create_platform_genre_sales(prepared_charts):
     df = prepared_charts.dropna(subset=["platform", "genre"]) # Tar bort rader som saknar platform och ggenre
 
@@ -288,8 +289,9 @@ def create_all_preprocessed_data_to_pkl():
         "vg_publishers_prepared": vg_publishers_prepared,
         "vg_geo_cities_prepared": vg_geo_cities_prepared,
         "vg_geo_countries_prepared": vg_geo_countries_prepared,
-        "df_q1": create_dataframe_for_question1(vg_charts_prepared),
-        "platform_sales_by_region": create_platform_sales_by_region(vg_charts_prepared),
+        "df_q1": create_df_q1(vg_charts_prepared),
+        "df_q2": create_df_q2(vg_charts_prepared),
+        "df_q3": create_df_q3(vg_charts_prepared),
         "yearly_regional_sales": create_yearly_regional_sales(vg_charts_prepared),
         "platform_sales_by_year": create_platform_sales_by_year(vg_charts_prepared),
         "genre_sales_by_region": create_genre_sales_by_region(vg_charts_prepared),

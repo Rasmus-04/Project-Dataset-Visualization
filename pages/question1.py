@@ -68,7 +68,7 @@ layout = html.Div([
     Input("q1-region-dropdown", "value"),
     Input("q1-rows-slider", "value")
 )
-def update_q1_chart(selected_region, nr_of_rows):
+def update_q1_graph(selected_region, nr_of_rows):
     # sätter region name till den valde regionen
     for region in regions:
         if selected_region == regions[region]:
@@ -94,6 +94,7 @@ def update_q1_chart(selected_region, nr_of_rows):
     )
 
     fig.update_layout(
+        template="plotly_white",
         yaxis_title="Platform",
         xaxis_title="Sales (millions)",
         height=600
