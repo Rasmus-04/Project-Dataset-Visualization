@@ -1,0 +1,10 @@
+
+/* Så att siffran till länken är brevid texten istället för under */
+.navbar-nav .nav-link {
+    white-space: nowrap;
+}
+
+/* så att "brand" inte är så långt åt höger */
+nav .container{
+    margin-left: 0;
+}

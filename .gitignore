@@ -58,3 +58,4 @@ ai-artifacts/*
 
 
 .conda
+.vscode/
