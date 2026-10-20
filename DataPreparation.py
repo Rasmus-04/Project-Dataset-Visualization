@@ -126,7 +126,16 @@ def clean_geo_countries(df):
 
 # Skapar dataframesen för alla frågor
 
-# Används för fråga 1-2: sales by platform, including regional sales
+# Används för fråga 1: regional sales by platform
+def create_dataframe_for_question1(prepared_charts):
+    df = prepared_charts
+    return (
+        df.groupby("platform")[REGIONAL_SALES] # Grupperar raderna efter platform och väljer kolumnerna som ska summeras
+        .sum(min_count=1) # Summerar värdena i varje grupp och kolumn om minst ett giltigt värde finns
+        .reset_index() # Gör platform till en vanlig kolumn och återställer indexet till 0, 1, 2, ...
+    )
+
+# Används för fråga 2: sales by platform, including regional sales
 def create_platform_sales_by_region(prepared_charts):
     df = prepared_charts
     return (
@@ -263,7 +272,6 @@ def create_title_regional_sales(prepared_charts):
     )
 
 
-
 # Rensar och sparar alla dataframes samt skapar dataframes som behöves för frågorna och sparar dom också
 def create_all_preprocessed_data_to_pkl():
 
@@ -280,6 +288,7 @@ def create_all_preprocessed_data_to_pkl():
         "vg_publishers_prepared": vg_publishers_prepared,
         "vg_geo_cities_prepared": vg_geo_cities_prepared,
         "vg_geo_countries_prepared": vg_geo_countries_prepared,
+        "df_q1": create_dataframe_for_question1(vg_charts_prepared),
         "platform_sales_by_region": create_platform_sales_by_region(vg_charts_prepared),
         "yearly_regional_sales": create_yearly_regional_sales(vg_charts_prepared),
         "platform_sales_by_year": create_platform_sales_by_year(vg_charts_prepared),
