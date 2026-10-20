@@ -15,7 +15,7 @@ dd_geo_cities = pd.read_csv('data/data_dictionary/vg_geo_cities.csv')
 dd_geo_countries = pd.read_csv('data/data_dictionary/vg_geo_countries.csv')
 dd_publishers = pd.read_csv('data/data_dictionary/vg_publishers.csv')
 
-prepaired_data_location = "preparedData"
+prepaired_data_location = "data/preparedData"
 
 REGIONAL_SALES = ["na_sales", "jp_sales", "pal_sales", "other_sales"]
 
