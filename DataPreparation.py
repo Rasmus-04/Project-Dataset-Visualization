@@ -150,7 +150,7 @@ def create_df_q2(prepared_charts):
 def create_df_q3(prepared_charts):
     df = prepared_charts.dropna(subset=["release_year"])  # Tar bort rader där release_year saknas
     return (
-        df.groupby("release_year")[REGIONAL_SALES + ["total_sales"]] # Grupperar raderna efter release_year och väljer kolumnerna som ska summeras
+        df.groupby("release_year")[REGIONAL_SALES] # Grupperar raderna efter release_year och väljer kolumnerna som ska summeras
         .sum(min_count=1) # Summerar värdena i varje grupp och kolumn om minst ett giltigt värde finns
         .reset_index() # Gör release_year till en vanlig kolumn och återställer indexet till 0, 1, 2, ...
         .sort_values("release_year") # Sorterar efter release_year i stigande ordning, från äldst till nyast

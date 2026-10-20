@@ -63,3 +63,5 @@ ai-artifacts/*
 # Ignore all files inside data/preparedData, but keep the folder
 data/preparedData/*
 !data/preparedData/.gitkeep
+
+test.py
