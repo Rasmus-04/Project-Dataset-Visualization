@@ -250,10 +250,9 @@ def create_df_q9(prepared_charts):
 
     return summary
 
-
 # Används för fråga 10: worldwide sales summed across platform releases per title
-def create_title_worldwide_sales(prepared_charts):
-    df = prepared_charts.dropna(subset=["title"]) # Tar bort rader som saknar title
+def create_df_q10(prepared_charts):
+    df = prepared_charts.dropna(subset=["title", "total_sales"]) # Tar bort rader som saknar title och total_sales
     return (
         df.groupby("title")["total_sales"] # Grupperar raderna efter title och väljer kolumnen total_sales för beräkningarna
         .sum(min_count=1)  # Summerar försäljningsvärdena för varje titel om minst ett giltigt värde finns
@@ -326,8 +325,8 @@ def create_all_preprocessed_data_to_pkl():
         "df_q7": create_df_q7(vg_charts_prepared),
         "df_q8": create_df_q8(vg_charts_prepared),
         "df_q9": create_df_q9(vg_charts_prepared),
+        "df_q10": create_df_q10(vg_charts_prepared),
         "yearly_regional_sales": create_yearly_regional_sales(vg_charts_prepared),
-        "title_worldwide_sales": create_title_worldwide_sales(vg_charts_prepared),
         "platform_genre_sales": create_platform_genre_sales(vg_charts_prepared),
         "title_regional_sales": create_title_regional_sales(vg_charts_prepared),
     }
