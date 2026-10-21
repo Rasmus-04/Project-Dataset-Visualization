@@ -196,7 +196,7 @@ def create_df_q7(prepared_charts):
     )
 
 # Används för fråga 8: publisher sales statistics and consistency indicators
-def create_publisher_sales_summary(prepared_charts):
+def create_df_q8(prepared_charts):
     df = prepared_charts.dropna(subset=["publisher"]) # Tar bort rader som saknar publisher
     summary = (
         df.groupby("publisher")["total_sales"] # Grupperar raderna efter publisher och väljer kolumnen total_sales för beräkningarna
@@ -211,6 +211,14 @@ def create_publisher_sales_summary(prepared_charts):
         )
         .reset_index() # Gör publisher till en vanlig kolumn och återställer indexet till 0, 1, 2, ...
     )
+    """
+    Hur jag mäter “konsekvent” och “hit or miss”: Jag använder variationskoefficienten (CV = std_sales / mean_sales). 
+    Den visar hur mycket ett publishers spel varierar i försäljning i förhållande till deras snittnivå.
+
+    Låg CV betyder att spelen säljer ungefär lika bra, alltså konsekvent.
+    Hög CV betyder att några få spel säljer mycket och resten lite, alltså hit or miss.
+    """
+    summary["cv"] = summary["std_sales"] / summary["mean_sales"]
     return summary.sort_values("total_sales", ascending=False) # Sorterar df på total_sales i fallande ordning (högst till lägst)
 
 # Används för fråga 9: total recorded sales and data coverage per region
@@ -306,8 +314,8 @@ def create_all_preprocessed_data_to_pkl():
         "df_q5": create_df_q5(vg_charts_prepared),
         "df_q6": create_df_q6(vg_charts_prepared),
         "df_q7": create_df_q7(vg_charts_prepared),
+        "df_q8": create_df_q8(vg_charts_prepared),
         "yearly_regional_sales": create_yearly_regional_sales(vg_charts_prepared),
-        "publisher_sales_summary": create_publisher_sales_summary(vg_charts_prepared),
         "regional_sales_summary": create_regional_sales_summary(vg_charts_prepared),
         "title_worldwide_sales": create_title_worldwide_sales(vg_charts_prepared),
         "platform_genre_sales": create_platform_genre_sales(vg_charts_prepared),
