@@ -166,7 +166,16 @@ def create_df_q4(prepared_charts):
         .sort_values(["release_year", "total_sales"], ascending=[True, False]) # Sorterar först efter release_year stigande och sedan efter total_sales fallande inom varje år
     )
 
-# Används för fråga 5-6: sales by genre and region
+# Används för fråga 5: sales by genre and region
+def create_df_q5(prepared_charts):
+    df = prepared_charts.dropna(subset=["genre"])
+    return (
+        df.groupby("genre")[REGIONAL_SALES] # Grupperar raderna efter genre samt väljer kolumnerna som ska summeras
+        .sum(min_count=1) # Summerar värdena i varje grupp och kolumn om minst ett giltigt värde finns
+        .reset_index() # Gör genre till en vanlig kolumn och återställer indexet till 0, 1, 2, ...
+    )
+
+# Används för fråga 6: sales by genre and region
 def create_genre_sales_by_region(prepared_charts):
     df = prepared_charts
     return (
@@ -293,6 +302,7 @@ def create_all_preprocessed_data_to_pkl():
         "df_q2": create_df_q2(vg_charts_prepared),
         "df_q3": create_df_q3(vg_charts_prepared),
         "df_q4": create_df_q4(vg_charts_prepared),
+        "df_q5": create_df_q5(vg_charts_prepared),
         "yearly_regional_sales": create_yearly_regional_sales(vg_charts_prepared),
         "genre_sales_by_region": create_genre_sales_by_region(vg_charts_prepared),
         "genre_sales_by_year": create_genre_sales_by_year(vg_charts_prepared),
