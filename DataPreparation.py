@@ -157,8 +157,8 @@ def create_df_q3(prepared_charts):
     )
 
 # Används för fråga 4: worldwide sales per platform and release year
-def create_platform_sales_by_year(prepared_charts):
-    df = prepared_charts.dropna(subset=["release_year"]) # Tar bort rader där release_year saknas
+def create_df_q4(prepared_charts):
+    df = prepared_charts.dropna(subset=["release_year", "platform"]) # Tar bort rader där release_year saknas
     return (
         df.groupby(["release_year", "platform"])["total_sales"] # Grupperar efter release_year och platform och väljer total_sales för summering
         .sum(min_count=1) # Summerar total_sales inom varje grupp om minst ett giltigt värde finns
@@ -292,8 +292,8 @@ def create_all_preprocessed_data_to_pkl():
         "df_q1": create_df_q1(vg_charts_prepared),
         "df_q2": create_df_q2(vg_charts_prepared),
         "df_q3": create_df_q3(vg_charts_prepared),
+        "df_q4": create_df_q4(vg_charts_prepared),
         "yearly_regional_sales": create_yearly_regional_sales(vg_charts_prepared),
-        "platform_sales_by_year": create_platform_sales_by_year(vg_charts_prepared),
         "genre_sales_by_region": create_genre_sales_by_region(vg_charts_prepared),
         "genre_sales_by_year": create_genre_sales_by_year(vg_charts_prepared),
         "publisher_sales_summary": create_publisher_sales_summary(vg_charts_prepared),
