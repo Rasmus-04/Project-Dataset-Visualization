@@ -222,7 +222,7 @@ def create_df_q8(prepared_charts):
     return summary.sort_values("total_sales", ascending=False) # Sorterar df på total_sales i fallande ordning (högst till lägst)
 
 # Används för fråga 9: total recorded sales and data coverage per region
-def create_regional_sales_summary(prepared_charts):
+def create_df_q9(prepared_charts):
     df = prepared_charts
     region_names = {
         "na_sales": "North America",
@@ -231,7 +231,8 @@ def create_regional_sales_summary(prepared_charts):
         "other_sales": "Other"
     }
 
-    return pd.DataFrame([
+    # Sammanställer försäljning för varje region
+    summary = pd.DataFrame([
         {
             "region": region_names[column], # Hämtar regionens namn från dictionaryn
             "sales_column": column, # Sparar namnet på den ursprungliga försäljningskolumnen
@@ -240,6 +241,15 @@ def create_regional_sales_summary(prepared_charts):
         }
         for column in REGIONAL_SALES # Upprepar beräkningarna för varje regional försäljningskolumn i listan.
     ])
+
+    # Beräknar varje regions andel av den totala försäljningen
+    summary["share_of_total"] = summary["total_sales"] / summary["total_sales"].sum() * 100
+
+    # Beräknar genomsnittlig försäljning per registrerat värde
+    summary["avg_sales_per_record"] = summary["total_sales"] / summary["records_with_sales"]
+
+    return summary
+
 
 # Används för fråga 10: worldwide sales summed across platform releases per title
 def create_title_worldwide_sales(prepared_charts):
@@ -315,8 +325,8 @@ def create_all_preprocessed_data_to_pkl():
         "df_q6": create_df_q6(vg_charts_prepared),
         "df_q7": create_df_q7(vg_charts_prepared),
         "df_q8": create_df_q8(vg_charts_prepared),
+        "df_q9": create_df_q9(vg_charts_prepared),
         "yearly_regional_sales": create_yearly_regional_sales(vg_charts_prepared),
-        "regional_sales_summary": create_regional_sales_summary(vg_charts_prepared),
         "title_worldwide_sales": create_title_worldwide_sales(vg_charts_prepared),
         "platform_genre_sales": create_platform_genre_sales(vg_charts_prepared),
         "title_regional_sales": create_title_regional_sales(vg_charts_prepared),

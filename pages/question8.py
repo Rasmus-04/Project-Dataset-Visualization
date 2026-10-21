@@ -38,6 +38,7 @@ layout = html.Div([
     Input("q8-min-games", "value"),
 )
 def update_q8_figure(min_games):
+    # Coefficient of variation(CV)
     # CV = variationskoefficienten (std_sales / mean_sales)
 
     # Publishers med för få spel ger opålitliga mått, och std saknas vid ett enda spel
