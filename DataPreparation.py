@@ -176,13 +176,14 @@ def create_df_q5(prepared_charts):
     )
 
 # Används för fråga 6: sales by genre and region
-def create_genre_sales_by_region(prepared_charts):
+def create_df_q6(prepared_charts):
     df = prepared_charts
     return (
         df.groupby("genre")[REGIONAL_SALES] # Grupperar raderna efter genre samt väljer kolumnerna som ska summeras
         .sum(min_count=1) # Summerar värdena i varje grupp och kolumn om minst ett giltigt värde finns
         .reset_index() # Gör genre till en vanlig kolumn och återställer indexet till 0, 1, 2, ...
     )
+
 
 # Används för fråga 7: worldwide sales by genre and release year
 def create_genre_sales_by_year(prepared_charts):
@@ -303,8 +304,8 @@ def create_all_preprocessed_data_to_pkl():
         "df_q3": create_df_q3(vg_charts_prepared),
         "df_q4": create_df_q4(vg_charts_prepared),
         "df_q5": create_df_q5(vg_charts_prepared),
+        "df_q6": create_df_q6(vg_charts_prepared),
         "yearly_regional_sales": create_yearly_regional_sales(vg_charts_prepared),
-        "genre_sales_by_region": create_genre_sales_by_region(vg_charts_prepared),
         "genre_sales_by_year": create_genre_sales_by_year(vg_charts_prepared),
         "publisher_sales_summary": create_publisher_sales_summary(vg_charts_prepared),
         "regional_sales_summary": create_regional_sales_summary(vg_charts_prepared),
