@@ -295,14 +295,52 @@ def create_df_q12(prepared_charts):
     return summary.sort_values(["platform_total_sales", "platform", "genre_share"],ascending=[False, True, False]) 
 
 # Används för fråga 13: regional sales summed across platform releases per title
-def create_title_regional_sales(prepared_charts):
+def create_df_q13(prepared_charts):
     df = prepared_charts.dropna(subset=["title"]) # Tar bort rader som saknar titel
-    return (
+    df = (
         df.groupby("title")[REGIONAL_SALES] # Grupperar raderna efter titel och väljer kolumnerna för regional försäljning
         .sum(min_count=1) # Summerar försäljningsvärdena för varje region och titel om minst ett giltigt värde finns
         .reset_index() # Gör title till en vanlig kolumn och återställer indexet till 0, 1, 2, ...
     )
 
+    # Total registrerad regional försäljning per titel.
+    df["total_sales"] = df[REGIONAL_SALES].sum(axis=1, min_count=1)
+
+    # Andelar beräknas bara när alla fyra regionvärden finns.
+    complete_regions = df[REGIONAL_SALES].notna().all(axis=1)
+
+    regional_total = df[REGIONAL_SALES].sum(axis=1, min_count=len(REGIONAL_SALES))
+
+    # Procentuell andel för varje region av spelets
+    # sammanlagda regionala försäljning.
+    for region in REGIONAL_SALES:
+        df[f"{region}_share"] = (df[region] / regional_total * 100).where(complete_regions & regional_total.gt(0))
+
+    share_columns = [f"{region}_share" for region in REGIONAL_SALES]
+
+    # Skillnaden mellan största och minsta regionala andel.
+    df["sales_difference"] = df[share_columns].max(axis=1) - df[share_columns].min(axis=1)
+    
+    # Beräkna genomsnittlig försäljning per spel i varje region.
+    regional_averages = {}
+
+    for region in REGIONAL_SALES:
+        regional_averages[region] = df[region].mean()
+
+
+    # Beräkna spelets relativa försäljningsindex per region.
+    for region in REGIONAL_SALES:
+        average = regional_averages[region]
+        df[f"{region}_index"] = df[region] / average if pd.notna(average) and average > 0 else float("nan")
+
+    index_columns = [f"{region}_index" for region in REGIONAL_SALES]
+
+    # Skillnaden mellan högsta och lägsta regionala index.
+    complete_indices = df[index_columns].notna().all(axis=1)
+
+    df["index_difference"] = (df[index_columns].max(axis=1) - df[index_columns].min(axis=1)).where(complete_indices)
+
+    return df.sort_values("total_sales", ascending=False, na_position="last")
 
 # Rensar och sparar alla dataframes samt skapar dataframes som behöves för frågorna och sparar dom också
 def create_all_preprocessed_data_to_pkl():
@@ -332,7 +370,7 @@ def create_all_preprocessed_data_to_pkl():
         "df_q10": create_df_q10(vg_charts_prepared),
         "df_q11": create_df_q11(vg_charts_prepared),
         "df_q12": create_df_q12(vg_charts_prepared),
-        "title_regional_sales": create_title_regional_sales(vg_charts_prepared),
+        "df_q13": create_df_q13(vg_charts_prepared),
     }
 
     for name, df in dataframes.items():
