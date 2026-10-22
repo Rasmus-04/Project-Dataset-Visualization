@@ -27,7 +27,6 @@ def save_df(name, df, location=prepaired_data_location):
     print(f"Saved {output_path} ({len(df):,} rows)")
 
 
-
 """
 Retunerar en Rengjorda dataframes
 """
@@ -272,7 +271,7 @@ def create_df_q11(prepared_charts):
     )
 
 # används för fråga 12: sales grouped by platform and genre
-def create_platform_genre_sales(prepared_charts):
+def create_df_q12(prepared_charts):
     df = prepared_charts.dropna(subset=["platform", "genre"]) # Tar bort rader som saknar platform och ggenre
 
     summary = (
@@ -281,14 +280,19 @@ def create_platform_genre_sales(prepared_charts):
         .reset_index() # Gör platform och genre till vanliga kolumner och återställer indexet
     )
 
-    # Beräknar plattformens totala försäljning över alla genrer
-    summary["platform_total_sales"] = (summary.groupby("platform")["total_sales"].transform(lambda values: values.sum(min_count=1)))
+    # Beräknar plattformens totala försäljning över alla genrer (gör så att alla rader får en kolumn med den respektive platormens totala sales)
+    summary["platform_total_sales"] = summary.groupby("platform")["total_sales"].transform(lambda values: values.sum(min_count=1))
 
-    # Beräknar hur stor andel av plattformens försäljning i %
-    # som kommer från respektive genre
-    summary["genre_share"] = (summary["total_sales"] / summary["platform_total_sales"] * 100)
+    # Beräknar hur stor andel av plattformens försäljning i % som kommer från respektive genre
+    summary["genre_share"] = summary["total_sales"] / summary["platform_total_sales"] * 100
 
-    return summary.sort_values( ["platform", "genre_share"], ascending=[True, False]) # Sorterar plattformarna alfabetiskt och försäljningen inom varje plattform från högst till lägst
+    # Genrens andel av ALL försäljning (över alla plattformar), i %
+    overall_genre_share = summary.groupby("genre")["total_sales"].sum() / summary["total_sales"].sum() * 100
+    
+    # Specialiseringsindex: 1 = som marknaden i snitt, över 1 = plattformen har proportionellt mer av genren
+    summary["specialization_index"] = summary["genre_share"] / summary["genre"].map(overall_genre_share)
+
+    return summary.sort_values(["platform_total_sales", "platform", "genre_share"],ascending=[False, True, False]) 
 
 # Används för fråga 13: regional sales summed across platform releases per title
 def create_title_regional_sales(prepared_charts):
@@ -327,7 +331,7 @@ def create_all_preprocessed_data_to_pkl():
         "df_q9": create_df_q9(vg_charts_prepared),
         "df_q10": create_df_q10(vg_charts_prepared),
         "df_q11": create_df_q11(vg_charts_prepared),
-        "platform_genre_sales": create_platform_genre_sales(vg_charts_prepared),
+        "df_q12": create_df_q12(vg_charts_prepared),
         "title_regional_sales": create_title_regional_sales(vg_charts_prepared),
     }
 
