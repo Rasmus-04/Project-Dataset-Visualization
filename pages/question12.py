@@ -22,6 +22,7 @@ METRICS = {
  
 layout = html.Div([
     html.H2("Question 12: Do any platforms seem to specialize in a particular genre?"),
+    html.P("Specialization Index = Platform Genre Share (%) / Overall Genre Market Share (%)"),
  
     html.Div([
         html.Div([

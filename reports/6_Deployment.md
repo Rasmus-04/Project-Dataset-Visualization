@@ -55,7 +55,7 @@ The main limitation is the quality and completeness of the available data. Despi
 
 ### Output: Final Presentation
 
-Here you need to create a final presentation for the seminar, where you will present your project. See the details in the notebook `presentation.ipynb` in the `presentation` folder.
+The presentation file is located in the `presentions` folder under the name `Group-7 presentastion.pdf`
 
 ### Output: App Demo
 

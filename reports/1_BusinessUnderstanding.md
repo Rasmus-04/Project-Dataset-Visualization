@@ -174,25 +174,11 @@ In this project, Patrick G. has been identified as the person within the company
 
 ### Output: Project Plan
 
-The project plan should, at a minimum, list project stages, with durations, resources required, inputs, outputs, and dependencies. The project plan is a dynamic document, updated at the end of each phase. An initial project plan (without any human resource allocations) is provided below to get you going. Discuss your project plan within your project group, and adjust it accordingly. You can use any tool you like (e.g. MS Project, Excel). Note, I have used a *waterfall* approach in the sample project plan, but an iterative and incremental approach can also be used (more akin to SCRUM), since CRISP-DM is really an iterative process.
+
 
 <img src="images/project_plan.drawio.png"></img>
 
-**Note**
 
-I created the sample project plan like this:
-- Install the [Draw.io Integration](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio) VSCode Extension.
-- Create a file with the extension `.drawio.png` (in my sample, the file is called `project_plan.drawio.png` and is located in folder `project/reports/images`).
-- Open the file in VSCode (which will open the Draw.IO design surface in the Code Editor).
-- Now you can create any Draw.IO drawing you want, but I used the following steps:
-  - From the Draw.IO main menu, choose `File -> Arrage -> Insert -> Template`.
-  - In the left margin, choose `Tables`.
-  - Select the `Gantt 1` template and click the `Insert`  button.
-  - Restructure the Gantt chart (table) as desired using the Draw.IO tools (and save the file).
-  - In any markdown file (i.e. `.md` file such as this file) or Jupyter Notebook markdown cell, you can then display the `.png` image with the following code (using a HTML `img` tag for displaying an image, where `src` is the path to the image):
-
-    ```html
-    <img src="images/project_plan.drawio.png">Project Plan</img>
     ```
 
 ### Output: Initial Assessment of Tools and Techniques
