@@ -11,6 +11,7 @@ dash.register_page(
     name="Question 13"
 )
 
+## Kanske en karta över värden där titlarnas popularitet reprensenteras av storleken av dens cirkel och plaserad i mitten av den regionen
 layout = html.Div([
     html.H2("Question 13: What titles are popular in one region but flop in another?"),
 

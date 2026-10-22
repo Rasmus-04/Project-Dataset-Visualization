@@ -262,8 +262,8 @@ def create_df_q10(prepared_charts):
     )
 
 # Används för fråga 11: sales per release year and region
-def create_yearly_regional_sales(prepared_charts):
-    df = prepared_charts.dropna(subset=["release_year"])  # Tar bort rader där release_year saknas
+def create_df_q11(prepared_charts):
+    df = prepared_charts.dropna(subset=["release_year", "total_sales"])  # Tar bort rader där release_year saknas
     return (
         df.groupby("release_year")[REGIONAL_SALES + ["total_sales"]] # Grupperar raderna efter release_year och väljer kolumnerna som ska summeras
         .sum(min_count=1) # Summerar värdena i varje grupp och kolumn om minst ett giltigt värde finns
@@ -326,7 +326,7 @@ def create_all_preprocessed_data_to_pkl():
         "df_q8": create_df_q8(vg_charts_prepared),
         "df_q9": create_df_q9(vg_charts_prepared),
         "df_q10": create_df_q10(vg_charts_prepared),
-        "yearly_regional_sales": create_yearly_regional_sales(vg_charts_prepared),
+        "df_q11": create_df_q11(vg_charts_prepared),
         "platform_genre_sales": create_platform_genre_sales(vg_charts_prepared),
         "title_regional_sales": create_title_regional_sales(vg_charts_prepared),
     }
