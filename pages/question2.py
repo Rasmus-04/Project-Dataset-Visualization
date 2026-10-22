@@ -26,7 +26,7 @@ layout = html.Div([
             marks={10: "10", 15: "15", 20: "20"},
             value=15
         )
-    ], style={"max-width": 600}),
+    ], style={"maxWidth": 600}),
 
     dcc.Graph(id="q2-graph")
 ])
