@@ -27,4 +27,4 @@ app.layout = dbc.Container([
 ], fluid=True) # Använder hela sidbredden
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
