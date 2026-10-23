@@ -14,7 +14,6 @@ regions = {
     "Other": "other_sales"
 }
 
-
 # Register the Dash page
 dash.register_page(
     __name__,

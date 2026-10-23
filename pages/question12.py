@@ -92,6 +92,6 @@ def update_q12_figure(top_n, metric):
     fig.update_layout(
         title={"text": "Platform and genre: where do platforms specialize?", "y": 0.98},
         height=max(450, 32 * top_n + 190),
-)
+    )
     
     return fig

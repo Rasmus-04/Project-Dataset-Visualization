@@ -10,7 +10,6 @@ dash.register_page(
     path="/question-9",
     name="Question 9"
 )
-
  
 # Alla tre alternativ: kolumn, axeltitel, textformat på stapeln
 METRICS = {

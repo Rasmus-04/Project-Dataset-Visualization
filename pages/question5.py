@@ -45,7 +45,6 @@ def update_q5_heat_graph():
         genre_share,
         x=genre_share.columns,
         y=genre_share.index,
-        aspect="auto",
         color_continuous_scale="Viridis",
         text_auto=".1f",
         labels={

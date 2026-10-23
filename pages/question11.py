@@ -67,5 +67,4 @@ def update_q11(year_range):
         },
         title="Worldwide sales per release year",)
 
-
     return fig

@@ -13,10 +13,7 @@ app.layout = dbc.Container([
             dbc.NavItem(dbc.NavLink(page["name"], href=page["relative_path"]))
             for page in sorted(
                 page_registry.values(), # Hämtar alla registrerade sidor i pages mappen
-                key=lambda page: (
-                    0 if page["name"] == "Home"
-                    else int(page["name"].replace("Question", ""))
-                )
+                key=lambda page: ( 0 if page["name"] == "Home" else int(page["name"].replace("Question", "")))
             )
         ],
         brand="Group 7 Dataset Visualization",

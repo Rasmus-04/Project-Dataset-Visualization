@@ -48,13 +48,7 @@ layout = dbc.Container([
                 min=10,
                 max=30,
                 step=5,
-                marks={
-                    10: "10",
-                    15: "15",
-                    20: "20",
-                    25: "25",
-                    30: "30"
-                },
+                marks={10: "10", 15: "15", 20: "20", 25: "25", 30: "30"},
                 value=15
             ),
 
@@ -111,7 +105,6 @@ def update_q4_line_graph():
     Input("nr-platforms-slider", "value")
     )
 def update_q4_heat_graph(year_range, nr_of_platforms):
-
     # Filtrerar df till de valda åren
     filtered_df = df[df["release_year"].between(year_range[0], year_range[1])]
 
@@ -128,10 +121,10 @@ def update_q4_heat_graph(year_range, nr_of_platforms):
 
 
     sales_matrix = filtered_df.pivot_table(
-    index="platform",
-    columns="release_year",
-    values="total_sales",
-    aggfunc="sum"
+        index="platform",
+        columns="release_year",
+        values="total_sales",
+        aggfunc="sum"
     )
 
     # Sort platforms by total sales
@@ -142,7 +135,6 @@ def update_q4_heat_graph(year_range, nr_of_platforms):
         sales_matrix,
         x=sales_matrix.columns,
         y=sales_matrix.index,
-        aspect="auto",
         color_continuous_scale="Viridis",
         labels={
             "x": "Release year",
